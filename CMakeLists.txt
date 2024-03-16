@@ -28,8 +28,20 @@ endif()
 # Our Project
 
 add_executable(${PROJECT_NAME} main.cpp
-        Player.cpp
-        Player.h)
+        Game/Player.cpp
+        Game/Player.h
+        Game/Obstacle.cpp
+        Game/Obstacle.h
+        PhyEngine/PhyEngine.cpp
+        PhyEngine/PhyEngine.h
+        PhyEngine/PhyObject.h
+        PhyEngine/Entity.cpp
+        PhyEngine/Entity.h
+        PhyEngine/PhyObject.cpp
+        PhyEngine/PhyMesh.cpp
+        PhyEngine/PhyMesh.h
+        PhyEngine/PhyMeshes/PhyRectangleMesh.cpp
+        PhyEngine/PhyMeshes/PhyRectangleMesh.h)
 #set(raylib_VERBOSE 1)
 target_link_libraries(${PROJECT_NAME} raylib)
 

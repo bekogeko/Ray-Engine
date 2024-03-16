@@ -1,5 +1,7 @@
 #include "raylib.h"
-#include "Player.h"
+#include "PhyEngine/PhyEngine.h"
+#include "Game/Player.h"
+#include "Game/Obstacle.h"
 
 #include <iostream>
 
@@ -12,11 +14,14 @@ int main()
     const int screenWidth = 800;
     const int screenHeight = 450;
 
-    Player player = Player({0, 0});
+    Player player = Player(0, 0);
+    std::vector<Obstacle> obstacles = {
+            Obstacle({-100, 100}, {300, 20}),
+    };
 
 
     Camera2D camera = { 0 };
-    camera.target = (Vector2){ player.position.x + 12, player.position.y + 12 };
+    camera.target = (Vector2){  0, 0 };
     camera.offset = (Vector2){ screenWidth/2, screenHeight/2 };
     camera.rotation = 0.0f;
     camera.zoom = 1.0f;
@@ -25,58 +30,57 @@ int main()
 
     InitWindow(screenWidth, screenHeight, "raylib [core] example - basic window");
 
-    SetTargetFPS(60);               // Set our game to run at 60 frames-per-second
+    SetTargetFPS(120);               // Set our game to run at 120 frames-per-second
     //--------------------------------------------------------------------------------------
 
     // Main game loop
     while (!WindowShouldClose())    // Detect window close button or ESC key
     {
-        // Update
-        //----------------------------------------------------------------------------------
-        // TODO: Update your variables here
-        //----------------------------------------------------------------------------------
-
-        if(IsKeyDown(KEY_D)){
-            player.velocity.x = 2;
-        }
-        if(IsKeyDown(KEY_A)){
-            player.velocity.x = -2;
-        }
-        if(IsKeyDown(KEY_SPACE)){
-            player.velocity.x = 0;
-        }
-
-
-
         // Physics
         //----------------------------------------------------------------------------------
-        // Update player acceleration
-        // Update player velocity
-        // Update player position
-        // Update player collider
+        // Update PhyObjects properties
+        // Apply forces and impulses
+        //
+        PhyEngine::UpdatePhysics();
+
+
+        // Update Game Entities (Player, Obstacles, etc.)
+        //----------------------------------------------------------------------------------
         player.Update();
-
-
-        // Camera target follows player
-        //        camera.target = (Vector2){ player.position.x + 12, player.position.y + 12 };
+        for (auto &obstacle : obstacles) {
+            obstacle.Update();
+        }
 
         // Draw
         //----------------------------------------------------------------------------------
         BeginDrawing();
-
         ClearBackground(RAYWHITE);
-        BeginMode2D(camera);
+        {
+            // Draw Game Entities
+            //----------------------------------------------------------------------------------
+            BeginMode2D(camera);
 
-        // Draw player
-        player.Draw();
-
-
-        EndMode2D();
-        DrawText(TextFormat("Player's Speed: %f",player.velocity.x) , 10, 40, 20, LIGHTGRAY);
-        DrawText(TextFormat("Player's Position: %f",player.position.x) , 10, 60, 20, LIGHTGRAY);
+            DrawCircle(0, 0, 5, BLACK);
 
 
+            // Draw player
+            player.Draw();
 
+            // Draw obstacles
+            for (auto &obstacle : obstacles) {
+                obstacle.Draw();
+            }
+
+
+            EndMode2D();
+        }
+
+
+        // Draw UI
+        //----------------------------------------------------------------------------------
+        {
+            player.DrawUI();
+        }
         EndDrawing();
         //----------------------------------------------------------------------------------
     }

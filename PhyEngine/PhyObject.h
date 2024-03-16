@@ -33,6 +33,10 @@ public:
     explicit PhyObject();
 
 
+    Vector2 GetLastPosition() const {
+        return lastPosition;
+    }
+
     Vector2 GetPosition() const {
         return position;
     }
@@ -72,6 +76,7 @@ public:
         return isGrounded;
     }
     Vector2 GetVelocity();
+    void SetVelocity(Vector2 velocity);
 
 
 
@@ -99,6 +104,11 @@ public:
 
     void UpdatePhysics();
 
+    // Bounds of the object
+    // it is used for broad phase collision detection
+    Rectangle GetBounds() const {
+        return mesh.get()->GetBoundingBox(this->position, this->rotation);
+    }
 
 
 

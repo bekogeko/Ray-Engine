@@ -29,6 +29,7 @@ public:
         float rotation = this->GetPhysics().GetRotation();
 
         auto indices = mesh->GetIndices();
+        auto vertices = mesh->GetVertices(position, rotation);
 
         for ( auto [v1,v2,v3] : indices){
 
@@ -37,6 +38,12 @@ public:
             Vector2 v3_world = PhyMesh::TransformPoint(v3, position, rotation);
 
             DrawTriangle(v1_world,v2_world,v3_world, RED);
+        }
+
+        for (auto vertex : vertices) {
+
+
+            DrawCircle(vertex.x, vertex.y,2, RED);
         }
 
     }

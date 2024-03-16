@@ -71,7 +71,7 @@ public:
         std::vector<Vector2> worldVertices;
 
         for (auto vertex : vertices) {
-            worldVertices.push_back(Vector2Add(Vector2Rotate(vertex, rotation), position));
+            worldVertices.push_back(PhyRectangleMesh::TransformPoint(vertex, position ,rotation));
         }
 
         return worldVertices ;
@@ -90,7 +90,34 @@ public:
     }
 
 
+    Rectangle GetBoundingBox(Vector2 position, float rotation) override {
 
+        // Get the world vertices
+        std::vector<Vector2> worldVertices = GetVertices(position, rotation);
+
+        // Find the min and max x and y values
+        float minX = worldVertices[0].x;
+        float maxX = worldVertices[0].x;
+        float minY = worldVertices[0].y;
+        float maxY = worldVertices[0].y;
+
+        for (auto vertex : worldVertices) {
+            if (vertex.x < minX) {
+                minX = vertex.x;
+            }
+            if (vertex.x > maxX) {
+                maxX = vertex.x;
+            }
+            if (vertex.y < minY) {
+                minY = vertex.y;
+            }
+            if (vertex.y > maxY) {
+                maxY = vertex.y;
+            }
+        }
+
+        return {minX, minY, maxX - minX, maxY - minY};
+    }
 
 
 };

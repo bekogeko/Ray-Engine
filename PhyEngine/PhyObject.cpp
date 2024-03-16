@@ -20,6 +20,10 @@ float PhyObject::GetMass() const {
     return mass;
 }
 
+void PhyObject::SetVelocity(Vector2 velocity) {
+    this->velocity = velocity;
+}
+
 Vector2 PhyObject::GetVelocity() {
     return velocity;
 }

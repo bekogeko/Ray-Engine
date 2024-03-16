@@ -34,6 +34,8 @@ public:
     // Returns the indices of the mesh
     virtual std::vector<std::tuple<Vector2,Vector2,Vector2>> GetIndices() = 0;
 
+    virtual Rectangle GetBoundingBox(Vector2 position, float rotation) = 0;
+
     // Returns the triangle count of the mesh
     int GetTriangleCount() const {
         return triangleCount;

@@ -62,18 +62,25 @@ public:
 
         if(IsKeyDown(KEY_S)){
             this->GetPhysics().ApplyImpulse({0, 10.0f});
+//            this->GetPhysics().ApplyForce({0, 300.0f});
         }
 
+
         if (IsKeyDown(KEY_SPACE) ){
-            this->GetPhysics().ApplyImpulse({0, -10.0f});
+            this->GetPhysics().ApplyForce({0,-300.0f * this->GetPhysics().GetMass()});
         }
     }
 
 
     void DrawUI() {
         Vector2 position = this->GetPhysics().GetPosition();
+        // accleeration
+        // velocity
+        // position
+        DrawText(TextFormat("Player's Acceleration: %.1f x, %.1f y",this->GetPhysics().GetAcceleration().x, this->GetPhysics().GetAcceleration().y) , 10, 20, 20, LIGHTGRAY);
         DrawText(TextFormat("Player's Speed: %.1f x, %.1f y",this->GetPhysics().GetVelocity().x, this->GetPhysics().GetVelocity().y) , 10, 40, 20, LIGHTGRAY);
         DrawText(TextFormat("Player's Position: %.1f x, %.1f y",position.x, position.y) , 10, 60, 20, LIGHTGRAY);
+
     }
 
     void OnCollide(PhyObject other)  {

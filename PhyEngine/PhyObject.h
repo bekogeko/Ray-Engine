@@ -33,6 +33,14 @@ public:
     explicit PhyObject();
 
 
+    Vector2 SetAcceleration(Vector2 newAcceleration){
+        acceleration = newAcceleration;
+    }
+
+    Vector2 GetAcceleration() const{
+        return acceleration;
+    }
+
     Vector2 GetLastPosition() const {
         return lastPosition;
     }

@@ -16,7 +16,8 @@ void PhyEngine::UpdatePhysics() {
 
     // Apply Gravity
     for (PhyObject* object: getInstance().m_Objects) {
-        object->ApplyForce({0, 9.8f * object->GetMass() });
+        auto acceleration = object->GetAcceleration();
+        object->SetAcceleration({acceleration.x,acceleration.y+ 9.8f * object->GetMass() });
     }
 
     // Apply an impulse to the object in Newtons

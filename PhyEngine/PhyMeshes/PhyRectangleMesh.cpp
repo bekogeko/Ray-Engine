@@ -44,8 +44,31 @@ PhyRectangleMesh::PhyRectangleMesh(float width, float height) {
 }
 
 Rectangle PhyRectangleMesh::GetBoundingBox(Vector2 position, float rotation) {
-    Rectangle boundingBox = {position.x - width/2, position.y - height/2, width, height};
-return boundingBox;
+
+    // Get the bounding box of the rectangle with the given position and rotation angle (in radians in center)
+
+    float minX = INFINITY;
+    float minY = INFINITY;
+
+    float maxX = -INFINITY;
+    float maxY = -INFINITY;
+
+    for (auto &v: this->vertices){
+        Vector2 rotated = Vector2Rotate(v, rotation);
+        Vector2 translated = Vector2Add(rotated, position);
+
+        if (translated.x < minX)
+            minX = translated.x;
+        if (translated.x > maxX)
+            maxX = translated.x;
+
+        if (translated.y < minY)
+            minY = translated.y;
+        if (translated.y > maxY)
+            maxY = translated.y;
+    }
+
+    return {minX, minY, maxX - minX, maxY - minY};
 }
 
 std::vector<std::tuple<Vector2, Vector2>> PhyRectangleMesh::GetFaces() const {

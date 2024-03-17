@@ -57,6 +57,9 @@ public:
         return indices;
     };
 
+    virtual void DrawDebug(Vector2 position, float rotation) const =0;
+
+
 
     // Returns the triangle count of the mesh
     int GetTriangleCount() const {

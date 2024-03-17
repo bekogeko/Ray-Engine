@@ -77,7 +77,7 @@ public:
     void SetGrounded(bool grounded){
         isGrounded = grounded;
     }
-    bool GetGrounded() const{
+    bool GetGrounded() const {
         return isGrounded;
     }
     Vector2 GetVelocity();

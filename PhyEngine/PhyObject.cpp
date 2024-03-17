@@ -4,6 +4,7 @@
 
 #include "PhyObject.h"
 #include "PhyEngine.h"
+#include "Debug.h"
 
 
 PhyObject::PhyObject(): position({0,0}), mass(10.0f) {
@@ -57,5 +58,7 @@ void PhyObject::UpdatePhysics() {
 
     acceleration.x = 0;
     acceleration.y = 0;
+
+
 
 }

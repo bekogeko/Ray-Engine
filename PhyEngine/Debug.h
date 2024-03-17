@@ -4,8 +4,8 @@
 
 #pragma once
 
-// class for Debuggable objects (PhyMeshes, PhyObjects, etc.)
-class Debuggable {
+// class for Debug objects (PhyMeshes, PhyObjects, etc.)
+class Debug {
 public:
      enum DebugFlags {
         DRAW_BOUNDING_BOX = 2,

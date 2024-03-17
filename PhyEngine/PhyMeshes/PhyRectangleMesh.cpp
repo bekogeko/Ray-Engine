@@ -3,6 +3,7 @@
 //
 
 #include "PhyRectangleMesh.h"
+#include "../Debug.h"
 
 
 PhyRectangleMesh::PhyRectangleMesh(float width, float height) {
@@ -43,7 +44,8 @@ PhyRectangleMesh::PhyRectangleMesh(float width, float height) {
 }
 
 Rectangle PhyRectangleMesh::GetBoundingBox(Vector2 position, float rotation) {
-    return {position.x - width/2, position.y - height/2, width, height};
+    Rectangle boundingBox = {position.x - width/2, position.y - height/2, width, height};
+return boundingBox;
 }
 
 std::vector<std::tuple<Vector2, Vector2>> PhyRectangleMesh::GetFaces() const {
@@ -58,4 +60,38 @@ std::vector<std::tuple<Vector2, Vector2>> PhyRectangleMesh::GetFaces() const {
 }
 
 PhyRectangleMesh::~PhyRectangleMesh() {
+}
+
+void PhyRectangleMesh::DrawDebug(Vector2 position, float rotation) const {
+
+    if(Debug::HasFlags(Debug::DRAW_NORMALS)){
+
+        // Bottom Face Normal Visualizer
+        Vector2 bottomPoint = Vector2Add(Vector2Rotate({0, height/2}, rotation), position);
+        Vector2 bottomNormal = Vector2Normalize(Vector2Rotate(normals[0], rotation));
+        bottomNormal = Vector2Scale(bottomNormal, 10);
+        DrawLineEx(bottomPoint, Vector2Subtract(bottomPoint, bottomNormal), 2, BLUE);
+
+        // Right Face Normal Visualizer
+        Vector2 rightPoint = Vector2Add(Vector2Rotate({width/2, 0}, rotation), position);
+        Vector2 rightNormal = Vector2Normalize(Vector2Rotate(normals[1], rotation));
+        rightNormal = Vector2Scale(rightNormal, 10);
+        DrawLineEx(rightPoint, Vector2Add(rightPoint, rightNormal), 2, BLUE);
+
+        // Top Face Normal Visualizer
+        Vector2 topPoint = Vector2Add(Vector2Rotate({0, -height/2}, rotation), position);
+        Vector2 topNormal = Vector2Normalize(Vector2Rotate(normals[2], rotation));
+        topNormal = Vector2Scale(topNormal, 10);
+        DrawLineEx(topPoint, Vector2Subtract(topPoint, topNormal), 2, BLUE);
+
+        // Left Face Normal Visualizer
+        Vector2 leftPoint = Vector2Add(Vector2Rotate({-width/2, 0}, rotation), position);
+        Vector2 leftNormal = Vector2Normalize(Vector2Rotate(normals[3], rotation));
+        leftNormal = Vector2Scale(leftNormal, 10);
+        DrawLineEx(leftPoint, Vector2Add(leftPoint, leftNormal), 2, BLUE);
+    }
+
+
+
+
 }

@@ -42,7 +42,7 @@ add_executable(${PROJECT_NAME} main.cpp
         PhyEngine/PhyMesh.h
         PhyEngine/PhyMeshes/PhyRectangleMesh.cpp
         PhyEngine/PhyMeshes/PhyRectangleMesh.h
-        PhyEngine/Debuggable.h)
+        PhyEngine/Debug.h)
 #set(raylib_VERBOSE 1)
 target_link_libraries(${PROJECT_NAME} raylib)
 

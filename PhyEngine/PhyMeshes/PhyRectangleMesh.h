@@ -17,6 +17,8 @@ public:
 
     std::vector<std::tuple<Vector2, Vector2>> GetFaces() const override;
 
+    void DrawDebug(Vector2 position, float rotation) const override;
+
     ~PhyRectangleMesh() override;
 
 private:

@@ -150,12 +150,6 @@ void PhyEngine::UpdatePhysics() {
 //        obj2->SetPosition(obj2->GetLastPosition());
 //
 //    }
-
-
-
-
-
-
 }
 
 void PhyEngine::AddObject(PhyObject& collider) {

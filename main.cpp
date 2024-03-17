@@ -2,7 +2,7 @@
 #include "PhyEngine/PhyEngine.h"
 #include "Game/Player.h"
 #include "Game/Obstacle.h"
-#include "PhyEngine/Debuggable.h"
+#include "PhyEngine/Debug.h"
 
 #include <iostream>
 
@@ -15,12 +15,15 @@ int main()
     const int screenWidth = 800;
     const int screenHeight = 450;
 
+    {
+//        Debug::SetDebugFlag(Debug::DebugFlags::DRAW_BOUNDING_BOX);
+//        Debug::SetDebugFlag(Debug::DebugFlags::DRAW_ROTATION);
+//        Debug::SetDebugFlag(Debug::DebugFlags::DRAW_VERTICES);
+//        Debug::SetDebugFlag(Debug::DebugFlags::DRAW_NORMALS);
 
-        Debuggable::SetDebugFlag(Debuggable::DebugFlags::DRAW_BOUNDING_BOX);
-
-        auto a = Debuggable::HasFlags(Debuggable::DebugFlags::DRAW_BOUNDING_BOX);
-    auto b = Debuggable::HasFlags(Debuggable::DebugFlags::DRAW_NORMALS);
-
+//        WARNING: Not Implemented Yet
+//        Debug::SetDebugFlag(Debug::DebugFlags::DRAW_TRIANGLES);
+    }
 
 
     Player player = Player(0, 0);
@@ -69,12 +72,6 @@ int main()
             //----------------------------------------------------------------------------------
             BeginMode2D(camera);
 
-//            DrawCircle(0, 0, 5, BLACK);
-
-            DrawCircle(0,0, 5, BLACK);
-            DrawCircle(0,20, 5, BLUE);
-
-
             // Draw player
             player.Draw();
 
@@ -82,6 +79,13 @@ int main()
             for (auto &obstacle : obstacles) {
                 obstacle.Draw();
             }
+
+            // Draw Debug
+            player.DrawDebug();
+            for (auto &obstacle : obstacles) {
+                obstacle.DrawDebug();
+            }
+
 
 
             EndMode2D();

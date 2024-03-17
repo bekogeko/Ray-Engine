@@ -53,28 +53,44 @@ public:
             DrawTriangle(v1_world,v2_world,v3_world, DARKGRAY);
         }
 
+//        // Draw the normals of the player
+//        // Bottom Normal Visualizer
+//        // Distance Vector from the center of the player to the bottom of the player
+//        // takes the rotation of the player into account
+//        Vector2 bottomPoint = Vector2Add(Vector2Rotate({0, meshHeight/2}, rotation), position);
+//        Vector2 bottomNormal = Vector2Normalize(Vector2Rotate(normals[0], rotation));
+//        bottomNormal = Vector2Scale(bottomNormal, 10);
+//        DrawLineEx(bottomPoint, Vector2Subtract(bottomPoint, bottomNormal), 2, BLUE);
+//
+//
+//
+//        // Right Normal Visualizer
+//        Vector2 rightPoint = Vector2Add(Vector2Rotate({meshWidth/2, 0}, rotation), position);
+//        Vector2 rightNormal = Vector2Normalize(Vector2Rotate(normals[1], rotation));
+//        rightNormal = Vector2Scale(rightNormal, 10);
+//        DrawLineEx(rightPoint, Vector2Add(rightPoint, rightNormal), 2, BLUE);
+//
+//
+//        // Top Normal Visualizer
+//        // Distance Vector from the center of the player to the top of the player
+//        // takes the rotation of the player into account
+//        Vector2 topPoint = Vector2Add(Vector2Rotate({0, -meshHeight/2}, rotation), position);
+//
+//        // Add Normalized vector to the top point to get the middle point of the top face
+//        Vector2 topNormal = Vector2Normalize(Vector2Rotate(normals[2], rotation));
+//        topNormal = Vector2Scale(topNormal, 10);
+//        DrawLineEx(topPoint, Vector2Subtract(topPoint, topNormal), 2, BLUE);
+//
+//        // Left Normal Visualizer
+//        Vector2 leftPoint = Vector2Add(Vector2Rotate({-meshWidth/2, 0}, rotation), position);
+//        Vector2 leftNormal = Vector2Normalize(Vector2Rotate(normals[3], rotation));
+//        leftNormal = Vector2Scale(leftNormal, 10);
+//        DrawLineEx(leftPoint, Vector2Add(leftPoint, leftNormal), 2, BLUE);
 
-        // Distance Vector from the center of the player to the top of the player
-        // takes the rotation of the player into account
-        Vector2 topPoint = Vector2Add(Vector2Rotate({0, -meshHeight/2}, rotation), position);
-
-        // Add Normalized vector to the top point to get the middle point of the top face
-        Vector2 topNormal = Vector2Normalize(Vector2Rotate(normals[2], rotation));
-        topNormal = Vector2Scale(topNormal, 10);
 
 
 
 
-
-
-
-
-
-
-        // GOAL: Rotate the line to the rotation of the player
-//        DrawLineEx(topCenterPoint,position, 2, BLACK);
-        DrawLineEx(position,topPoint, 2, BLACK);
-        DrawLineEx(topPoint, Vector2Subtract(topPoint, topNormal), 2, BLUE);
 
 
 

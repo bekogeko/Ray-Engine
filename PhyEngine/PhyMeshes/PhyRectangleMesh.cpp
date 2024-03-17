@@ -43,7 +43,7 @@ PhyRectangleMesh::PhyRectangleMesh(float width, float height) {
 
 }
 
-Rectangle PhyRectangleMesh::GetBoundingBox(Vector2 position, float rotation) {
+Rectangle PhyRectangleMesh::GetBoundingBox(Vector2 position, float rotation) const {
 
     // Get the bounding box of the rectangle with the given position and rotation angle (in radians in center)
 
@@ -87,6 +87,11 @@ PhyRectangleMesh::~PhyRectangleMesh() {
 
 void PhyRectangleMesh::DrawDebug(Vector2 position, float rotation) const {
 
+    if(Debug::HasFlags(Debug::DRAW_BOUNDING_BOX)){
+        Rectangle boundingBox = GetBoundingBox(position, rotation);
+        DrawRectangleLinesEx(boundingBox, 2, VIOLET);
+    }
+
     if(Debug::HasFlags(Debug::DRAW_NORMALS)){
 
         // Bottom Face Normal Visualizer
@@ -113,8 +118,4 @@ void PhyRectangleMesh::DrawDebug(Vector2 position, float rotation) const {
         leftNormal = Vector2Scale(leftNormal, 10);
         DrawLineEx(leftPoint, Vector2Add(leftPoint, leftNormal), 2, BLUE);
     }
-
-
-
-
 }

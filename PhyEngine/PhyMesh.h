@@ -32,7 +32,7 @@ public:
 
 
     // Returns the bounding box of the mesh
-    virtual Rectangle GetBoundingBox(Vector2 position, float rotation) = 0;
+    virtual Rectangle GetBoundingBox(Vector2 position, float rotation) const = 0;
 
     // gives the faces of the mesh in local space
     virtual std::vector<std::tuple<Vector2,Vector2>> GetFaces() const = 0;

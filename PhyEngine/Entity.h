@@ -20,18 +20,7 @@ public:
     virtual void DrawUI() {};
 
     void DrawDebug(){
-        if(Debug::HasFlags(Debug::DRAW_BOUNDING_BOX)){
-            // Get the position of the object
-            Vector2 position = m_Physics.GetPosition();
 
-            // Get the rotation of the object
-            float rotation = m_Physics.GetRotation();
-
-            // Get the bounds of the object
-            Rectangle my_Bounds = m_Physics.GetMesh()->GetBoundingBox(position, rotation);
-
-            DrawRectangleLinesEx(my_Bounds, 2, VIOLET);
-        }
 
         if(Debug::HasFlags(Debug::DRAW_ROTATION)){
             // Get the position of the object
@@ -44,7 +33,7 @@ public:
             float degrees = rotation * RAD2DEG;
             degrees = fmod(degrees, 360);
 
-            DrawCircleSector(position,25,0,degrees,(5*((int)degrees)%180),DARKGREEN);
+            DrawCircleSector(position,10,0,degrees,(5*((int)degrees)%180),DARKGREEN);
         }
 
         if (Debug::HasFlags(Debug::DRAW_VERTICES)){

@@ -10,7 +10,7 @@ class Obstacle: public Entity{
 public:
     Obstacle(Vector2 position, Vector2 size){
         this->GetPhysics().SetPosition(position);
-        this->GetPhysics().SetMesh(new PhyRectangleMesh(size.x,size.y));
+        this->GetPhysics().SetMesh(new PhyRectangleMesh(size.x, size.y));
 
 
         this->GetPhysics().SetMass(10.0f);
@@ -29,28 +29,22 @@ public:
         float rotation = this->GetPhysics().GetRotation();
 
         auto indices = mesh->GetIndices();
-        auto vertices = mesh->GetVertices(position, rotation);
+        auto vertices = mesh->GetVertices();
+
+
 
         for ( auto [v1,v2,v3] : indices){
 
-            Vector2 v1_world = PhyMesh::TransformPoint(v1, position, rotation);
-            Vector2 v2_world = PhyMesh::TransformPoint(v2, position, rotation);
-            Vector2 v3_world = PhyMesh::TransformPoint(v3, position, rotation);
+            Vector2 v1_world = Vector2Add(Vector2Rotate(v1,rotation) , position);
+            Vector2 v2_world = Vector2Add(Vector2Rotate(v2,rotation) , position);
+            Vector2 v3_world = Vector2Add(Vector2Rotate(v3,rotation) , position);
 
             DrawTriangle(v1_world,v2_world,v3_world, RED);
         }
-
-        for (auto vertex : vertices) {
-
-
-            DrawCircle(vertex.x, vertex.y,2, RED);
-        }
-
     }
 
-
-
-
+    void DrawUI() override {
+    }
 
 
 };

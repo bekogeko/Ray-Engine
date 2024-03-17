@@ -18,7 +18,7 @@ public:
         this->GetPhysics().SetMass(10.0f);
 
         // set the mesh of the player
-        this->GetPhysics().SetMesh(new PhyRectangleMesh(24,64));
+        this->GetPhysics().SetMesh(new PhyRectangleMesh(24, 64));
 
 
         // set OnCollision fn pointer to point OnCollide callback
@@ -36,17 +36,47 @@ public:
 
         PhyMesh *mesh = this->GetPhysics().GetMesh();
         float rotation = this->GetPhysics().GetRotation();
+        float meshWidth = mesh->GetBoundingBox(position, rotation).width;
+        float meshHeight = mesh->GetBoundingBox(position, rotation).height;
+
 
         auto indices = mesh->GetIndices();
+        auto vertices = mesh->GetVertices();
+        auto normals = mesh->GetNormals();
 
         for ( auto [v1,v2,v3] : indices){
 
-            Vector2 v1_world = PhyMesh::TransformPoint(v1, position, rotation);
-            Vector2 v2_world = PhyMesh::TransformPoint(v2, position, rotation);
-            Vector2 v3_world = PhyMesh::TransformPoint(v3, position, rotation);
+            Vector2 v1_world = Vector2Add(Vector2Rotate(v1,rotation) , position);
+            Vector2 v2_world = Vector2Add(Vector2Rotate(v2,rotation) , position);
+            Vector2 v3_world = Vector2Add(Vector2Rotate(v3,rotation) , position);
 
-            DrawTriangle(v1_world,v2_world,v3_world, BLUE);
+            DrawTriangle(v1_world,v2_world,v3_world, DARKGRAY);
         }
+
+
+        // Distance Vector from the center of the player to the top of the player
+        // takes the rotation of the player into account
+        Vector2 topPoint = Vector2Add(Vector2Rotate({0, -meshHeight/2}, rotation), position);
+
+        // Add Normalized vector to the top point to get the middle point of the top face
+        Vector2 topNormal = Vector2Normalize(Vector2Rotate(normals[2], rotation));
+        topNormal = Vector2Scale(topNormal, 10);
+
+
+
+
+
+
+
+
+
+
+        // GOAL: Rotate the line to the rotation of the player
+//        DrawLineEx(topCenterPoint,position, 2, BLACK);
+        DrawLineEx(position,topPoint, 2, BLACK);
+        DrawLineEx(topPoint, Vector2Subtract(topPoint, topNormal), 2, BLUE);
+
+
 
     }
 
@@ -63,6 +93,11 @@ public:
         if(IsKeyDown(KEY_S)){
             this->GetPhysics().ApplyImpulse({0, 10.0f});
 //            this->GetPhysics().ApplyForce({0, 300.0f});
+        }
+
+        if(IsKeyDown(KEY_E)){
+            this->GetPhysics().SetRotation(this->GetPhysics().GetRotation() + 0.01f);
+
         }
 
 

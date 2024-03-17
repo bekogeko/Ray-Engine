@@ -20,7 +20,7 @@ private:
     float mass;
 
     Vector2 position;
-    Vector2 lastPosition;
+    Vector2 lastPosition{};
 
     Vector2 velocity{0,0};
     Vector2 acceleration{0,0};
@@ -33,7 +33,7 @@ public:
     explicit PhyObject();
 
 
-    Vector2 SetAcceleration(Vector2 newAcceleration){
+    void SetAcceleration(Vector2 newAcceleration){
         acceleration = newAcceleration;
     }
 
@@ -63,9 +63,6 @@ public:
     void SetMesh(PhyMesh* newMesh){
         mesh.reset(newMesh);
     }
-
-
-
 
     PhyMesh* GetMesh() const{
         return mesh.get();

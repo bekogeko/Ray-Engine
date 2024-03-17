@@ -2,6 +2,7 @@
 #include "PhyEngine/PhyEngine.h"
 #include "Game/Player.h"
 #include "Game/Obstacle.h"
+#include "PhyEngine/Debuggable.h"
 
 #include <iostream>
 
@@ -13,6 +14,14 @@ int main()
     // Initialization
     const int screenWidth = 800;
     const int screenHeight = 450;
+
+
+        Debuggable::SetDebugFlag(Debuggable::DebugFlags::DRAW_BOUNDING_BOX);
+
+        auto a = Debuggable::HasFlags(Debuggable::DebugFlags::DRAW_BOUNDING_BOX);
+    auto b = Debuggable::HasFlags(Debuggable::DebugFlags::DRAW_NORMALS);
+
+
 
     Player player = Player(0, 0);
     std::vector<Obstacle> obstacles = {
@@ -60,7 +69,10 @@ int main()
             //----------------------------------------------------------------------------------
             BeginMode2D(camera);
 
-            DrawCircle(0, 0, 5, BLACK);
+//            DrawCircle(0, 0, 5, BLACK);
+
+            DrawCircle(0,0, 5, BLACK);
+            DrawCircle(0,20, 5, BLUE);
 
 
             // Draw player
@@ -80,6 +92,9 @@ int main()
         //----------------------------------------------------------------------------------
         {
             player.DrawUI();
+            for (auto &obstacle : obstacles) {
+                obstacle.DrawUI();
+            }
         }
         EndDrawing();
         //----------------------------------------------------------------------------------

@@ -8,8 +8,6 @@
 
 PhyObject::PhyObject(): position({0,0}), mass(10.0f) {
     PhyEngine::AddObject(*this);
-    // Set the default mesh to a square
-//    this->mesh = nullptr;
 }
 
 void PhyObject::SetMass(float newMass) {
@@ -33,6 +31,9 @@ void PhyObject::UpdatePhysics() {
         // Do not move in any direction if the object is grounded
         velocity.x = 0;
         velocity.y = 0;
+
+        acceleration.x = 0;
+        acceleration.y = 0;
 
         rotationSpeed = 0;
 

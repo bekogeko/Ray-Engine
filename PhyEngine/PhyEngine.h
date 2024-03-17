@@ -24,25 +24,7 @@ class PhyEngine {
 
 public:
     static void AddObject(PhyObject& collider);
-
-//    static bool CheckWorldCollision(Rectangle collider) {
-//        for (auto &c: getInstance().m_Objects) {
-//            if (!isColliding(collider, c))
-//                continue;
-//
-//            return true;
-//        }
-//        return false;
-//    }
-
     static void UpdatePhysics();
-
-//    static bool isColliding(Rectangle a, Rectangle b){
-//        return a.x + a.width >= b.x &&
-//               b.x + b.width >= a.x &&
-//               a.y + a.height >= b.y &&
-//               b.y + b.height >= a.y;
-//    }
 
     static void SubmitForce(PhyObject object, Vector2 force){
         getInstance().m_ForceQueue.emplace_back(object, force);
@@ -51,6 +33,8 @@ public:
     static void SubmitImpulse(PhyObject object, Vector2 impulse){
         getInstance().m_ImpulseQueue.emplace_back(object, impulse);
     }
+
+    static bool CheckMeshCollision(PhyObject* object1, PhyObject* object2);
 
 private:
     std::vector<PhyObject*> m_Objects;

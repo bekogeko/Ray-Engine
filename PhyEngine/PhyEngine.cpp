@@ -128,13 +128,14 @@ void PhyEngine::UpdatePhysics() {
 
     // narrow phase
     for(auto& [obj1,obj2]: potentialCollisions){
-        if(CheckCollisionRecs(obj1->GetBounds(),obj2->GetBounds())){
-
+        if(CheckMeshCollision(obj1,obj2)){
+            // collision detected
             obj1->SetPosition(obj1->GetLastPosition());
             obj2->SetPosition(obj2->GetLastPosition());
 
             obj1->SetVelocity({0,0});
             obj2->SetVelocity({0,0});
+
 
             if(obj1->OnCollision != nullptr)
                 obj1->OnCollision(*obj2);
@@ -143,15 +144,76 @@ void PhyEngine::UpdatePhysics() {
         }
     }
 
-    // Solution phase
-//    for(auto& [obj1,obj2]: potentialCollisions){
-//        // set position to the previous position
-//        obj1->SetPosition(obj1->GetLastPosition());
-//        obj2->SetPosition(obj2->GetLastPosition());
-//
-//    }
+    potentialCollisions.clear();
+
+
 }
 
 void PhyEngine::AddObject(PhyObject& collider) {
     getInstance().m_Objects.push_back(&collider);
+}
+
+bool PhyEngine::CheckMeshCollision(PhyObject *object1, PhyObject *object2) {
+
+    // Mesh to Mesh Collision
+    // - SAT (Separating Axis Theorem)
+    // - GJK (Gilbert-Johnson-Keerthi)
+    // - EPA (Expanding Polytope Algorithm)
+    // - MPR (Minkowski Portal Refinement)
+
+    // We will use SAT for now
+    auto vertices1 = object1->GetMesh()->GetVertices();
+    auto vertices2 = object2->GetMesh()->GetVertices();
+
+    std::vector<Vector2> worldVertices1;
+    std::vector<Vector2> worldVertices2;
+
+    for (auto vertex: vertices1){
+        worldVertices1.push_back(Vector2Add(Vector2Rotate(vertex,object1->GetRotation()),object1->GetPosition()));
+    }
+
+    for (auto vertex: vertices2){
+        worldVertices2.push_back(Vector2Add(Vector2Rotate(vertex,object2->GetRotation()),object2->GetPosition()));
+    }
+
+    for (int shape = 0; shape < 2; shape++) {
+        if (shape ==1){
+            std::swap(worldVertices1,worldVertices2);
+        }
+
+        for (int a = 0; a < worldVertices1.size(); ++a) {
+            int b = (a + 1) % worldVertices1.size();
+            Vector2 axisProj = {
+                    -(worldVertices1[b].y - worldVertices1[a].y),
+                    worldVertices1[b].x - worldVertices1[a].x
+            };
+
+            float min_r1 = INFINITY;
+            float max_r1 = -INFINITY;
+
+            for (int p = 0; p < worldVertices1.size();p++) {
+                float q = Vector2DotProduct(worldVertices1[p], axisProj);
+
+                min_r1 = fmin(min_r1, q);
+                max_r1 = fmax(max_r1, q);
+            }
+
+            float min_r2 = INFINITY;
+            float max_r2 = -INFINITY;
+
+            for (int p = 0; p < worldVertices2.size();p++) {
+                float q = Vector2DotProduct(worldVertices2[p], axisProj);
+
+                min_r2 = fmin(min_r2, q);
+                max_r2 = fmax(max_r2, q);
+            }
+
+            if (!(max_r2>=min_r1 && max_r1>=min_r2)){
+                return false;
+            }
+        }
+    }
+
+    return true;
+
 }

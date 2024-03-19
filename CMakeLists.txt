@@ -42,10 +42,10 @@ add_subdirectory(Engine)
 
 # link the engine library
 target_link_libraries(${PROJECT_NAME} Engine)
-add_dependencies(${PROJECT_NAME} Engine)
+#add_dependencies(${PROJECT_NAME} Engine)
 
 # include the engine headers with the "Engine/" prefix
-target_include_directories(${PROJECT_NAME} PUBLIC Engine )
+#target_include_directories(${PROJECT_NAME} PUBLIC INTERFACE Engine)
 
 
 #set(raylib_VERBOSE 1)

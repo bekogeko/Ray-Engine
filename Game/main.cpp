@@ -3,7 +3,8 @@
 #include "Player.h"
 #include "Obstacle.h"
 
-#include "Engine.h"
+#include "Entry.h"
+
 #include <iostream>
 
 //------------------------------------------------------------------------------------
@@ -17,19 +18,19 @@ int main()
 
     {
 //        Debug::SetDebugFlag(Debug::DebugFlags::DRAW_BOUNDING_BOX);
-        Debug::SetDebugFlag(Debug::DebugFlags::DRAW_ROTATION);
-        Debug::SetDebugFlag(Debug::DebugFlags::DRAW_VERTICES);
-        Debug::SetDebugFlag(Debug::DebugFlags::DRAW_NORMALS);
+//        Debug::SetDebugFlag(Debug::DebugFlags::DRAW_ROTATION);
+//        Debug::SetDebugFlag(Debug::DebugFlags::DRAW_VERTICES);
+//        Debug::SetDebugFlag(Debug::DebugFlags::DRAW_NORMALS);
 
 //        WARNING: Not Implemented Yet
 //        Debug::SetDebugFlag(Debug::DebugFlags::DRAW_TRIANGLES);
     }
 
 
-    Player player = Player(0, 0);
-    std::vector<Obstacle> obstacles = {
-            Obstacle({-100, 100}, {300, 20}),
-    };
+//    Player player = Player(0, 0);
+//    std::vector<Obstacle> obstacles = {
+//            Obstacle({-100, 100}, {300, 20}),
+//    };
 
 
     Camera2D camera = { 0 };
@@ -39,11 +40,13 @@ int main()
     camera.zoom = 1.42f;
 
 
-
-    InitWindow(screenWidth, screenHeight, "raylib [core] example - basic window");
-
-    SetTargetFPS(120);               // Set our game to run at 120 frames-per-second
-    //--------------------------------------------------------------------------------------
+    // - Initialize the engine
+    // - Initialize the window
+    // - Initialize the Camera
+    // - Initialize the physics engine
+    // - Initialize the game entities
+    //
+    RayEngine::Engine::Init(screenWidth, screenHeight);
 
     // Main game loop
     while (!WindowShouldClose())    // Detect window close button or ESC key
@@ -53,15 +56,29 @@ int main()
         // Update PhyObjects properties
         // Apply forces and impulses
         //
-        PhyEngine::UpdatePhysics();
+        //        PhyEngine::UpdatePhysics();
+
+        // Engine Update
+        //----------------------------------------------------------------------------------
+        // description
+        //  this is the order of the update loop in the engine
+        //
+        // - Update physics
+        // - Update Entities (Player, Obstacles, etc.)
+        //
+        // - Draw Entities (Player, Obstacles, etc.)
+        // - Draw Debug
+        // - Draw UI
+
+
 
 
         // Update Game Entities (Player, Obstacles, etc.)
         //----------------------------------------------------------------------------------
-        player.Update();
-        for (auto &obstacle : obstacles) {
-            obstacle.Update();
-        }
+//        player.Update();
+//        for (auto &obstacle : obstacles) {
+//            obstacle.Update();
+//        }
 
         // Draw
         //----------------------------------------------------------------------------------
@@ -73,18 +90,18 @@ int main()
             BeginMode2D(camera);
 
             // Draw player
-            player.Draw();
-
-            // Draw obstacles
-            for (auto &obstacle : obstacles) {
-                obstacle.Draw();
-            }
-
-            // Draw Debug
-            player.DrawDebug();
-            for (auto &obstacle : obstacles) {
-                obstacle.DrawDebug();
-            }
+//            player.Draw();
+//
+//            // Draw obstacles
+//            for (auto &obstacle : obstacles) {
+//                obstacle.Draw();
+//            }
+//
+//            // Draw Debug
+//            player.DrawDebug();
+//            for (auto &obstacle : obstacles) {
+//                obstacle.DrawDebug();
+//            }
 
 
 
@@ -94,12 +111,12 @@ int main()
 
         // Draw UI
         //----------------------------------------------------------------------------------
-        {
-            player.DrawUI();
-            for (auto &obstacle : obstacles) {
-                obstacle.DrawUI();
-            }
-        }
+//        {
+//            player.DrawUI();
+//            for (auto &obstacle : obstacles) {
+//                obstacle.DrawUI();
+//            }
+//        }
         EndDrawing();
         //----------------------------------------------------------------------------------
     }

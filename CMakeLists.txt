@@ -1,7 +1,7 @@
-cmake_minimum_required(VERSION 3.11) # FetchContent is available in 3.11+
+cmake_minimum_required(VERSION 3.14) # FetchContent is available in 3.11+
 # c++ standard 17
 set(CMAKE_CXX_STANDARD 17)
-project(RayEngine)
+project(Game)
 
 # Generate compile_commands.json
 set(CMAKE_EXPORT_COMPILE_COMMANDS ON)
@@ -25,26 +25,37 @@ if (NOT raylib_FOUND) # If there's none, fetch and build raylib
     endif()
 endif()
 
-# Our Project
 
-add_executable(${PROJECT_NAME} main.cpp
+
+# Add the executable, link the raylib library
+
+add_executable(${PROJECT_NAME} Game/main.cpp
         Game/Player.cpp
         Game/Player.h
         Game/Obstacle.cpp
         Game/Obstacle.h
-        PhyEngine/PhyEngine.cpp
-        PhyEngine/PhyEngine.h
-        PhyEngine/PhyObject.h
-        PhyEngine/Entity.cpp
-        PhyEngine/Entity.h
-        PhyEngine/PhyObject.cpp
-        PhyEngine/PhyMesh.cpp
-        PhyEngine/PhyMesh.h
-        PhyEngine/PhyMeshes/PhyRectangleMesh.cpp
-        PhyEngine/PhyMeshes/PhyRectangleMesh.h
-        PhyEngine/Debug.h)
+)
+
+
+# Engine Project
+add_subdirectory(Engine)
+
+# link the engine library
+target_link_libraries(${PROJECT_NAME} Engine)
+add_dependencies(${PROJECT_NAME} Engine)
+
+# include the engine headers with the "Engine/" prefix
+target_include_directories(${PROJECT_NAME} PUBLIC Engine )
+
+
 #set(raylib_VERBOSE 1)
 target_link_libraries(${PROJECT_NAME} raylib)
+#add_dependencies(${PROJECT_NAME} Engine)
+# add prefix to the engine link
+# for example "Engine/Debug.h"
+
+
+
 
 ## Web Configurations
 #if (${PLATFORM} STREQUAL "Web")

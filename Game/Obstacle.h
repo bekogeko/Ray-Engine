@@ -4,7 +4,7 @@
 #pragma once
 
 #include "raylib.h"
-#include "../PhyEngine/Entity.h"
+#include "Engine.h"
 
 class Obstacle: public Entity{
 public:

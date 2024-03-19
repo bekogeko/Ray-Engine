@@ -3,10 +3,8 @@
 //
 #pragma once
 
-#include "raylib.h"
-#include "../PhyEngine/Entity.h"
-#include "../PhyEngine/PhyMeshes/PhyRectangleMesh.h"
-
+#include "include/Engine.h"
+#include "src/PhyEngine/PhyMeshes/PhyRectangleMesh.h"
 
 class Player : public Entity{
 public:
@@ -70,6 +68,10 @@ public:
 
         if(IsKeyDown(KEY_E)){
             this->GetPhysics().SetRotation(this->GetPhysics().GetRotation() + 0.01f);
+
+        }
+        if(IsKeyDown(KEY_Q)){
+            this->GetPhysics().SetRotation(this->GetPhysics().GetRotation() - 0.01f);
 
         }
 

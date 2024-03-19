@@ -154,7 +154,6 @@ void PhyEngine::AddObject(PhyObject& collider) {
 }
 
 bool PhyEngine::CheckMeshCollision(PhyObject *object1, PhyObject *object2) {
-
     // Mesh to Mesh Collision
     // - SAT (Separating Axis Theorem)
     // - GJK (Gilbert-Johnson-Keerthi)
@@ -213,7 +212,5 @@ bool PhyEngine::CheckMeshCollision(PhyObject *object1, PhyObject *object2) {
             }
         }
     }
-
     return true;
-
 }

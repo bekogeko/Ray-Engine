@@ -4,7 +4,7 @@
 
 #pragma once
 
-#include "PhyObject.h"
+#include "PhyEngine/PhyObject.h"
 #include "Debug.h"
 
 class Entity

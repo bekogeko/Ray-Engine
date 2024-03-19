@@ -1,9 +1,9 @@
 #include "raylib.h"
-#include "PhyEngine/PhyEngine.h"
-#include "Game/Player.h"
-#include "Game/Obstacle.h"
-#include "PhyEngine/Debug.h"
+//#include "PhyEngine/PhyEngine.h"
+#include "Player.h"
+#include "Obstacle.h"
 
+#include "Engine.h"
 #include <iostream>
 
 //------------------------------------------------------------------------------------
@@ -17,9 +17,9 @@ int main()
 
     {
 //        Debug::SetDebugFlag(Debug::DebugFlags::DRAW_BOUNDING_BOX);
-//        Debug::SetDebugFlag(Debug::DebugFlags::DRAW_ROTATION);
-//        Debug::SetDebugFlag(Debug::DebugFlags::DRAW_VERTICES);
-//        Debug::SetDebugFlag(Debug::DebugFlags::DRAW_NORMALS);
+        Debug::SetDebugFlag(Debug::DebugFlags::DRAW_ROTATION);
+        Debug::SetDebugFlag(Debug::DebugFlags::DRAW_VERTICES);
+        Debug::SetDebugFlag(Debug::DebugFlags::DRAW_NORMALS);
 
 //        WARNING: Not Implemented Yet
 //        Debug::SetDebugFlag(Debug::DebugFlags::DRAW_TRIANGLES);
@@ -36,7 +36,7 @@ int main()
     camera.target = (Vector2){  0, 0 };
     camera.offset = (Vector2){ screenWidth/2, screenHeight/2 };
     camera.rotation = 0.0f;
-    camera.zoom = 1.0f;
+    camera.zoom = 1.42f;
 
 
 

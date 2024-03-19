@@ -3,8 +3,7 @@
 //
 
 #include "PhyRectangleMesh.h"
-#include "../Debug.h"
-
+#include "../../Debug.h"
 
 PhyRectangleMesh::PhyRectangleMesh(float width, float height) {
 

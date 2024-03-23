@@ -29,31 +29,19 @@ endif()
 
 # Add the executable, link the raylib library
 
-add_executable(${PROJECT_NAME} Game/main.cpp
-        Game/Player.cpp
-        Game/Player.h
-        Game/Obstacle.cpp
-        Game/Obstacle.h
-)
-
 
 # Engine Project
 add_subdirectory(Engine)
 
+add_executable(${PROJECT_NAME} Game/main.cpp
+        Game/Player.h
+)
+
 # link the engine library
 target_link_libraries(${PROJECT_NAME} Engine)
-#add_dependencies(${PROJECT_NAME} Engine)
-
-# include the engine headers with the "Engine/" prefix
-#target_include_directories(${PROJECT_NAME} PUBLIC INTERFACE Engine)
-
 
 #set(raylib_VERBOSE 1)
 target_link_libraries(${PROJECT_NAME} raylib)
-#add_dependencies(${PROJECT_NAME} Engine)
-# add prefix to the engine link
-# for example "Engine/Debug.h"
-
 
 
 

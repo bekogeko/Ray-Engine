@@ -1,11 +1,6 @@
-#include "raylib.h"
-//#include "PhyEngine/PhyEngine.h"
+
+#include "RayEngine.h"
 #include "Player.h"
-#include "Obstacle.h"
-
-#include "Entry.h"
-
-#include <iostream>
 
 //------------------------------------------------------------------------------------
 // Program main entry point
@@ -26,13 +21,6 @@ int main()
 //        Debug::SetDebugFlag(Debug::DebugFlags::DRAW_TRIANGLES);
     }
 
-
-//    Player player = Player(0, 0);
-//    std::vector<Obstacle> obstacles = {
-//            Obstacle({-100, 100}, {300, 20}),
-//    };
-
-
     Camera2D camera = { 0 };
     camera.target = (Vector2){  0, 0 };
     camera.offset = (Vector2){ screenWidth/2, screenHeight/2 };
@@ -40,16 +28,16 @@ int main()
     camera.zoom = 1.42f;
 
 
+
     // - Initialize the engine
-    // - Initialize the window
-    // - Initialize the Camera
-    // - Initialize the physics engine
-    // - Initialize the game entities
-    //
     RayEngine::Engine::Init(screenWidth, screenHeight);
 
+    Player player;
+
+//     auto player = RayEngine::Engine::GetScene()->CreateObject("Player");
+
     // Main game loop
-    while (!WindowShouldClose())    // Detect window close button or ESC key
+    while (!RayEngine::Engine::ShouldCloseWindow())    // Detect window close button or ESC key
     {
         // Physics
         //----------------------------------------------------------------------------------
@@ -65,12 +53,12 @@ int main()
         //
         // - Update physics
         // - Update Entities (Player, Obstacles, etc.)
-        //
+        RayEngine::Engine::Update();
+
         // - Draw Entities (Player, Obstacles, etc.)
         // - Draw Debug
         // - Draw UI
-
-
+        RayEngine::Engine::Draw(camera);
 
 
         // Update Game Entities (Player, Obstacles, etc.)
@@ -82,31 +70,31 @@ int main()
 
         // Draw
         //----------------------------------------------------------------------------------
-        BeginDrawing();
-        ClearBackground(RAYWHITE);
-        {
-            // Draw Game Entities
-            //----------------------------------------------------------------------------------
-            BeginMode2D(camera);
-
-            // Draw player
-//            player.Draw();
+//        BeginDrawing();
+//        ClearBackground(RAYWHITE);
+//        {
+//            // Draw Game Entities
+//            //----------------------------------------------------------------------------------
+//            BeginMode2D(camera);
 //
-//            // Draw obstacles
-//            for (auto &obstacle : obstacles) {
-//                obstacle.Draw();
-//            }
+//            // Draw player
+////            player.Draw();
+////
+////            // Draw obstacles
+////            for (auto &obstacle : obstacles) {
+////                obstacle.Draw();
+////            }
+////
+////            // Draw Debug
+////            player.DrawDebug();
+////            for (auto &obstacle : obstacles) {
+////                obstacle.DrawDebug();
+////            }
 //
-//            // Draw Debug
-//            player.DrawDebug();
-//            for (auto &obstacle : obstacles) {
-//                obstacle.DrawDebug();
-//            }
-
-
-
-            EndMode2D();
-        }
+//
+//
+//            EndMode2D();
+//        }
 
 
         // Draw UI
@@ -117,13 +105,14 @@ int main()
 //                obstacle.DrawUI();
 //            }
 //        }
-        EndDrawing();
+//        EndDrawing();
         //----------------------------------------------------------------------------------
     }
 
+    int a = 0;
     // De-Initialization
     //--------------------------------------------------------------------------------------
-    CloseWindow();        // Close window and OpenGL context
+    RayEngine::Engine::Close();       // Close window and OpenGL context
     //--------------------------------------------------------------------------------------
 
     return 0;

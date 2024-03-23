@@ -3,6 +3,7 @@
 //
 
 #pragma once
+#include <iostream>
 
 // class for Debug objects (PhyMeshes, PhyObjects, etc.)
 class Debug {
@@ -24,6 +25,12 @@ public:
     // returns the flags
     static bool HasFlags(DebugFlags flag) {
         return m_DebugFlags & flag;
+    }
+
+    // << operator overload
+    // Log
+    void operator << (const char* message) {
+        std::cout << message << std::endl;
     }
 
 

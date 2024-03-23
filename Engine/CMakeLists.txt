@@ -24,7 +24,12 @@ file(GLOB_RECURSE SRC_HEADERS "src/*.h")
 file(GLOB_RECURSE VENDOR_INCLUDE "vendor/entt/single_include/**/*.*" )
 
 # Add the library
-add_library(Engine STATIC "include/" ${SRC_SOURCES} ${SRC_HEADERS})
+add_library(Engine STATIC "include/" ${SRC_SOURCES} ${SRC_HEADERS}
+        src/ECS/Entity.cpp
+        src/ECS/Entity.h
+        src/ECS/Components.h
+        src/ECS/interfaces.h
+        )
 
 
 #target_include_directories(Engine PUBLIC include/ ${VENDOR_INCLUDE} ${SRC_HEADERS} PRIVATE ${SRC_SOURCES} )

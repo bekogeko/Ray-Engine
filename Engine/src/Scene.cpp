@@ -14,35 +14,49 @@ namespace RayEngine {
 
 
     Scene::Scene() {
-        entityRegistry.on_construct<TransformComponent>().connect<&Scene::OnTransformConstruct>();
     }
 
     Scene::~Scene() {
 
         std::cout << "Scene destroyed..." << std::endl;
 
+
+        m_Entities.clear();
+
         // Destroy all entities
-        entityRegistry.clear();
+        for(auto& entity: m_Entities){
+            entity.reset();
+        }
+
+
 
     }
+    void Scene::RecordEntity(std::unique_ptr<Entity> entity) {
+        m_Entities.push_back(std::move(entity));
+    }
 
+
+
+    // Run update on every entity
     void Scene::UpdateScene() {
-
         // Update all entities
         for(auto& entity: m_Entities){
             entity->Update(GetFrameTime());
         }
 
+        // Update all systems
+        // - Update physics
+
+
+
 
     }
 
 
-    void Scene::OnTransformConstruct(entt::registry &registry, entt::entity entity) {
-        // Add the entity to the transform group
-    }
 
     void Scene::DrawScene() {
 
+        // Draw all entities
         auto view= entityRegistry.view<TransformComponent,BoxRenderer>();
         for(auto entity: view){
             auto [transform,renderer] = view.get<TransformComponent,BoxRenderer>(entity);
@@ -77,7 +91,7 @@ namespace RayEngine {
         // Start all entities
 
         // go over m_Entities
-        // call Start on each entity
+        // calls overridden Start method
         for(auto& entity: m_Entities){
             entity->Start();
         }
@@ -87,11 +101,13 @@ namespace RayEngine {
         EntityID id = entityRegistry.create();
         entityRegistry.emplace<TransformComponent>(id);
 //        entityRegistry.emplace<TagComponent>(id, "Object");
+//        m_EntityIds.push_back(id);
         return id;
     }
 
-    void Scene::RecordEntity(Entity *entity) {
-        m_Entities.push_back(std::shared_ptr<Entity>(entity));
+
+    void Scene::DrawUI() {
+
     }
 
 

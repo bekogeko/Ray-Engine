@@ -31,19 +31,31 @@ namespace RayEngine
     //  - - - - Draw
     void Engine::Update()
     {
-        // if it is the first frame, start the scene
 
 
-        // Update the scene
+        // update physics
+        // update logic
+        // - Update all systems
+        // - Update all entities
+
+        // Update all systems
+        // - Update physics
+//        PhysicsEngine::UpdatePhysics();
+
+        // Update all entities
         get().m_Scene->UpdateScene();
     }
 
     void Engine::Draw(Camera2D camera) {
 
+        // - Draw World (Entities)
+        // - Draw Debug
+        // - Draw UI
+
+
         // Clear the screen
         BeginDrawing();
         ClearBackground(RAYWHITE);
-
         {
             BeginMode2D(camera);
 
@@ -52,6 +64,10 @@ namespace RayEngine
 
             EndMode2D();
         }
+//        {
+//            // Draw UI
+//            get().m_Scene->DrawUI();
+//        }
 
         EndDrawing();
 
@@ -67,6 +83,7 @@ namespace RayEngine
     }
 
     void Engine::Start() {
+        // Start the scene
         get().m_Scene->StartScene();
     }
 

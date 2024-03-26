@@ -20,6 +20,7 @@ namespace RayEngine {
         virtual ~Entity(){
             std::cout << "Entity destroyed..." << std::endl;
 //            m_Scene->DestroyEntity(m_Id);
+            m_Scene.reset();
         }
 
 

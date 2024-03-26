@@ -20,11 +20,12 @@ namespace RayEngine {
         ~Scene();
 
         EntityID CreateEntity();
-        void RecordEntity(Entity* entity);
+        void RecordEntity(std::unique_ptr<Entity> entity);
 
         void StartScene();
         void UpdateScene();
         void DrawScene();
+        void DrawUI();
 
         // all_of
         template<typename T>
@@ -51,13 +52,12 @@ namespace RayEngine {
             }
         }
 
-
-
-
-        static void OnTransformConstruct(entt::registry& registry, EntityID entity);
     private:
         entt::registry entityRegistry;
-        std::vector<std::shared_ptr<Entity>> m_Entities;
+        std::vector<EntityID> m_EntityIds;
+
+//        std::vector<std::shared_ptr<Entity>> m_Entities;
+        std::vector<std::unique_ptr<Entity>> m_Entities;
     };
 
 

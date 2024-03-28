@@ -15,7 +15,7 @@ int main()
 //        Debug::SetDebugFlag(Debug::DebugFlags::DRAW_BOUNDING_BOX);
 //        Debug::SetDebugFlag(Debug::DebugFlags::DRAW_ROTATION);
 //        Debug::SetDebugFlag(Debug::DebugFlags::DRAW_VERTICES);
-//        Debug::SetDebugFlag(Debug::DebugFlags::DRAW_NORMALS);
+        Debug::SetDebugFlag(Debug::DebugFlags::DRAW_NORMALS);
 
 //        WARNING: Not Implemented Yet
 //        Debug::SetDebugFlag(Debug::DebugFlags::DRAW_TRIANGLES);
@@ -33,9 +33,6 @@ int main()
     RayEngine::Engine::Init(screenWidth, screenHeight);
 
     Player player;
-
-//     auto player = RayEngine::Engine::GetScene()->CreateObject("Player");
-
     // Main game loop
     while (!RayEngine::Engine::ShouldCloseWindow())    // Detect window close button or ESC key
     {

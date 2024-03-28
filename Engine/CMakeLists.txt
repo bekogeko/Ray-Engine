@@ -28,8 +28,8 @@ add_library(Engine STATIC "include/" ${SRC_SOURCES} ${SRC_HEADERS}
         src/ECS/Entity.cpp
         src/ECS/Entity.h
         src/ECS/Components.h
-        src/ECS/interfaces.h
-        )
+        src/ECS/PhysicsBody.h
+)
 
 
 #target_include_directories(Engine PUBLIC include/ ${VENDOR_INCLUDE} ${SRC_HEADERS} PRIVATE ${SRC_SOURCES} )

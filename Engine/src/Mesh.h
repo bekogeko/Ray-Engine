@@ -11,7 +11,6 @@
 
 namespace RayEngine {
     class Mesh {
-
     protected:
         int triangleCount;
         int vertexCount;
@@ -19,25 +18,20 @@ namespace RayEngine {
         // vertices and normals of the mesh
         std::vector<Vector2> vertices;
 
-
         // line normals of the mesh in local space
         std::vector<Vector2> normals;
 
         // index of the vertices that make up a triangle
         std::vector<std::tuple<Vector2, Vector2, Vector2>> indices;
-
-
     public:
         // virtual destructor
         virtual ~Mesh() {};
-
 
         // Returns the bounding box of the mesh
         virtual Rectangle GetBoundingBox(Vector2 position, float rotation) const = 0;
 
         // gives the faces of the mesh in local space (without rotation and translation)
         virtual std::vector<std::tuple<Vector2, Vector2>> GetFaces() const = 0;
-
 
         // Returns the normals of every line in the mesh in local space
         std::vector<Vector2> GetNormals() const {
@@ -55,9 +49,6 @@ namespace RayEngine {
         std::vector<std::tuple<Vector2, Vector2, Vector2>> GetIndices() const {
             return indices;
         };
-
-//        virtual void DrawDebug(Vector2 position, float rotation) const = 0;
-
 
         // Returns the triangle count of the mesh
         int GetTriangleCount() const {

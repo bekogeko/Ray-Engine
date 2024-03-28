@@ -5,21 +5,44 @@
 #pragma once
 
 #include "raylib.h"
-#include "interfaces.h"
 #include "Entity.h"
 #include "Mesh.h"
 
 namespace RayEngine {
-
-
-
     struct TransformComponent{
+        // the changes will be applied to these variables
         Vector2 position;
         float rotation;
 
+
+        // reassign last position and rotation
+        // if something goes wrong, we can revert back to the last position.
+        // if we need to interpolate between the last and current position.
+        // if everything is working fine, this function will be called at the end of the update
+        void UpdateLast(){
+            lastPosition = position;
+            lastRotation = rotation;
+        }
+
+        inline Vector2 getLastPosition() const{
+            return lastPosition;
+        }
+
+        inline float getLastRotation() const{
+            return lastRotation;
+        }
+
         TransformComponent() = default;
         TransformComponent(const TransformComponent&) = default;
-        explicit TransformComponent(const Vector2& pos) : position(pos), rotation(0.0f) {}
+        explicit TransformComponent(const Vector2& pos){
+            position = pos;
+            rotation = 0.0f;
+
+            UpdateLast();
+        }
+    private:
+        Vector2 lastPosition{};
+        float lastRotation{};
     };
 
     struct TagComponent {
@@ -105,18 +128,21 @@ namespace RayEngine {
             return faces;
         }
 
+        Vector2 GetSize() const {
+            return size;
+        }
     };
 
-    struct UIElement{
-        Vector2 position{0,0};
-        std::string text;
-        Color color{GRAY};
-        float fontSize = 20.0f;
-
-        UIElement() = default;
-        UIElement(const UIElement&) = default;
-        explicit UIElement(const Vector2& pos, std::string  text, const Color& color) : position(pos), text(std::move(text)), color(color), fontSize(20) {}
-    };
+//    struct UIElement{
+//        Vector2 position{0,0};
+//        std::string text;
+//        Color color{GRAY};
+//        float fontSize = 20.0f;
+//
+//        UIElement() = default;
+//        UIElement(const UIElement&) = default;
+//        explicit UIElement(const Vector2& pos, std::string  text, const Color& color) : position(pos), text(std::move(text)), color(color), fontSize(20) {}
+//    };
 
 
 

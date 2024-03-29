@@ -3,14 +3,9 @@
 //
 
 #include "Scene.h"
-#include "ECS/Components.h"
-#include "ECS/Entity.h"
-#include "Engine.h"
+#include "RayEngine.h"
 
 #include <iostream>
-#include "raylib.h"
-#include "ECS/PhysicsBody.h"
-
 namespace RayEngine {
 
 
@@ -37,6 +32,8 @@ namespace RayEngine {
 
     // Run update on every entity
     void Scene::UpdateScene() {
+        using namespace RayEngine;
+
         // Update all entities
         for(auto& entity: m_Entities){
             entity->Update(GetFrameTime());
@@ -46,11 +43,11 @@ namespace RayEngine {
         // - Update physics
 
         // get items with PhysicsBody component and TransformComponent
-        auto physicsView = entityRegistry.view<PhysicsBody,TransformComponent>();
+        auto physicsView = entityRegistry.view<PhysicsBody,Transform>();
 
         // Update positions and velocities
         for(auto entity: physicsView){
-            auto [physicsBody,transform] = physicsView.get<PhysicsBody,TransformComponent>(entity);
+            auto [physicsBody,transform] = physicsView.get<PhysicsBody,Transform>(entity);
             // Update position
             transform.position = Vector2Add(transform.position, Vector2Scale(physicsBody.velocity, GetFrameTime()));
 
@@ -63,7 +60,7 @@ namespace RayEngine {
 
         // collision detection
         for (auto entity: physicsView){
-            auto [physicsBody,transform] = physicsView.get<PhysicsBody,TransformComponent>(entity);
+            auto [physicsBody,transform] = physicsView.get<PhysicsBody,Transform>(entity);
 
 
 
@@ -73,9 +70,9 @@ namespace RayEngine {
 
         // everything is done in the physics system
         // - Update transforms
-        auto transformView = entityRegistry.view<TransformComponent>();
+        auto transformView = entityRegistry.view<Transform>();
         for(auto entity: transformView){
-            auto& transform = transformView.get<TransformComponent>(entity);
+            auto& transform = transformView.get<Transform>(entity);
             transform.UpdateLast();
         }
     }
@@ -85,9 +82,9 @@ namespace RayEngine {
     void Scene::DrawScene() {
 
         // Draw all entities
-        auto boxRenderers = entityRegistry.view<TransformComponent,BoxRenderer>();
+        auto boxRenderers = entityRegistry.view<Transform,BoxRenderer>();
         for(auto entity: boxRenderers){
-            auto [transform,renderer] = boxRenderers.get<TransformComponent,BoxRenderer>(entity);
+            auto [transform,renderer] = boxRenderers.get<Transform,BoxRenderer>(entity);
 
             auto indices = renderer.GetIndices();
             auto position = transform.position;
@@ -104,7 +101,7 @@ namespace RayEngine {
                 p3 = Vector2Add(p3,position);
 
                 // draw triangle
-                DrawTriangle(p1,p2,p3,RED);
+                DrawTriangle(p1,p2,p3,renderer.GetColor());
                 // we might want to draw the lines with
                 // DrawTriangleStrip
                 // How it works:
@@ -192,7 +189,7 @@ namespace RayEngine {
 
     EntityID Scene::CreateEntity() {
         EntityID id = entityRegistry.create();
-        entityRegistry.emplace<TransformComponent>(id);
+        entityRegistry.emplace<Transform>(id);
 //        entityRegistry.emplace<TagComponent>(id, "Object");
         m_EntityIds.push_back(id);
         return id;

@@ -30,6 +30,8 @@ add_library(Engine STATIC "include/" ${SRC_SOURCES} ${SRC_HEADERS}
         src/ECS/Components.h
         src/ECS/PhysicsBody.h
         src/ECS/Rotation.h
+        src/ECS/Transform.h
+        src/ECS/BoxRenderer.h
 )
 
 

@@ -12,11 +12,11 @@ int main()
     const int screenHeight = 450;
 
     {
-//        Debug::SetDebugFlag(Debug::DebugFlags::DRAW_BOUNDING_BOX);
-//        Debug::SetDebugFlag(Debug::DebugFlags::DRAW_ROTATION);
-//        Debug::SetDebugFlag(Debug::DebugFlags::DRAW_VERTICES);
-//        Debug::SetDebugFlag(Debug::DebugFlags::DRAW_NORMALS);
-//        Debug::SetDebugFlag(Debug::DebugFlags::DRAW_TRIANGLES);
+        Debug::SetDebugFlag(Debug::DebugFlags::DRAW_BOUNDING_BOX);
+        Debug::SetDebugFlag(Debug::DebugFlags::DRAW_ROTATION);
+        Debug::SetDebugFlag(Debug::DebugFlags::DRAW_VERTICES);
+        Debug::SetDebugFlag(Debug::DebugFlags::DRAW_NORMALS);
+        Debug::SetDebugFlag(Debug::DebugFlags::DRAW_TRIANGLES);
     }
 
     Camera2D camera = { 0 };

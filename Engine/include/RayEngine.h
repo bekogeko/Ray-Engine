@@ -7,8 +7,13 @@
 #include "Engine.h"
 
 #include "ECS/Components.h"
-#include "ECS/PhysicsBody.h"
 #include "ECS/Entity.h"
 #include "Scene.h"
+
+
+#include "ECS/PhysicsBody.h"
+#include "ECS/Transform.h"
+#include "ECS/Rotation.h"
+#include "ECS/BoxRenderer.h"
 
 

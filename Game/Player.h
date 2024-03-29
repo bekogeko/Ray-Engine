@@ -11,15 +11,17 @@ class Player: public RayEngine::Entity{
 protected:
 
     void Start() override {
-        AddComponent<RayEngine::BoxRenderer>(60,50);
+        auto& renderer = AddComponent<RayEngine::BoxRenderer>(60,50);
+        renderer.SetColor(0,0,255,255);
+
         AddComponent<RayEngine::PhysicsBody>(100);
 
-        auto &transform = AddComponent<RayEngine::TransformComponent>();
+        auto &transform = AddComponent<RayEngine::Transform>();
         transform.rotation = 35.0f;
     }
 
     void Update(float deltaTime) override {
-        auto& transform = GetComponent<RayEngine::TransformComponent>();
+        auto& transform = GetComponent<RayEngine::Transform>();
         auto& physicsBody = GetComponent<RayEngine::PhysicsBody>();
 
 

@@ -13,7 +13,8 @@ public:
         DRAW_NORMALS = 4,
         DRAW_VERTICES = 8,
         DRAW_TRIANGLES = 16,
-        DRAW_ROTATION = 32
+        DRAW_ROTATION = 32,
+        DRAW_COLLISION = 64
     };
 
     // Set Debug Flags

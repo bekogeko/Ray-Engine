@@ -18,6 +18,7 @@ int main()
         Debug::SetDebugFlag(Debug::DebugFlags::DRAW_VERTICES);
         Debug::SetDebugFlag(Debug::DebugFlags::DRAW_NORMALS);
         Debug::SetDebugFlag(Debug::DebugFlags::DRAW_TRIANGLES);
+        Debug::SetDebugFlag(Debug::DebugFlags::DRAW_COLLISION);
     }
 
     Camera2D camera = { 0 };
@@ -32,7 +33,9 @@ int main()
     RayEngine::Engine::Init(screenWidth, screenHeight);
 
     Player player;
-    Obstacle obstacle1;
+    Obstacle obstacle1({100, 100}, {50, 50});
+
+    Obstacle obstacle2({0, 100}, {50, 50});
 
     // Main game loop
     while (!RayEngine::Engine::ShouldCloseWindow())    // Detect window close button or ESC key

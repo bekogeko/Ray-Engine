@@ -8,12 +8,21 @@
 
 class Obstacle: public RayEngine::Entity{
 
+private:
+    Vector2 position;
+    Vector2 size;
+public:
+
+    Obstacle(Vector2 position, Vector2 size): position(position), size(size){
+    }
+
     void Start() override {
-        AddComponent<RayEngine::BoxRenderer>(50,50);
+        AddComponent<RayEngine::BoxRenderer>(size.x, size.y);
         AddComponent<RayEngine::PhysicsBody>(100);
 
         auto &transform = AddComponent<RayEngine::Transform>();
         transform.rotation = 35.0f;
+        transform.position = position;
     }
 
     void Update(float deltaTime) override {

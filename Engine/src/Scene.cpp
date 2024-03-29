@@ -59,11 +59,39 @@ namespace RayEngine {
         }
 
         // collision detection
-        for (auto entity: physicsView){
-            auto [physicsBody,transform] = physicsView.get<PhysicsBody,Transform>(entity);
+        auto colliderView = entityRegistry.view<BoxRenderer,PhysicsBody,Transform>();
+
+        for (auto colliderBody: colliderView) {
+            auto [collider,physicsBody,transform] = colliderView.get<BoxRenderer,PhysicsBody,Transform>(colliderBody);
+            auto colliderBounds = collider.GetBoundingBox(transform.position,transform.rotation);
+
+            for (auto otherBody: colliderView) {
+                if (colliderBody == otherBody) continue;
+
+                auto otherCollider = colliderView.get<BoxRenderer>(otherBody);
+                auto otherPhysicsBody = colliderView.get<PhysicsBody>(otherBody);
+                auto otherTransform = colliderView.get<Transform>(otherBody);
 
 
+                auto otherBounds = otherCollider.GetBoundingBox(otherTransform.position, otherTransform.rotation);
 
+                if (CheckCollisionRecs(colliderBounds, otherBounds)) {
+                    // collision detected
+                    // we can add a collision component to the entities
+                    // and then we can check for collision components
+                    // and then we can call OnCollision on the entities
+
+                    // if Debug::DRAW_COLLISION is set
+                    if(Debug::HasFlags(Debug::DRAW_COLLISION)){
+                        DrawRectangleLinesEx(colliderBounds,1,RED);
+                        DrawRectangleLinesEx(otherBounds,1,RED);
+                    }
+
+                }
+                else{
+                    DrawText("No Collision", 100, 100, 20, GREEN);
+                }
+            }
         }
 
 

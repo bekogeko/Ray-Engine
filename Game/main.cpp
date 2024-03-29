@@ -1,6 +1,7 @@
 
 #include "RayEngine.h"
 #include "Player.h"
+#include "Obstacle.h"
 
 //------------------------------------------------------------------------------------
 // Program main entry point
@@ -31,6 +32,8 @@ int main()
     RayEngine::Engine::Init(screenWidth, screenHeight);
 
     Player player;
+    Obstacle obstacle1;
+
     // Main game loop
     while (!RayEngine::Engine::ShouldCloseWindow())    // Detect window close button or ESC key
     {

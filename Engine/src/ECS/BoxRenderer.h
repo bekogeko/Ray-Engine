@@ -10,7 +10,7 @@ namespace RayEngine {
     struct BoxRenderer: RayEngine::Mesh{
     private:
         Vector2 size;
-        Color color = WHITE;
+        Color color = RED;
     public:
 
         BoxRenderer(float width, float height) : size({width, height}) {

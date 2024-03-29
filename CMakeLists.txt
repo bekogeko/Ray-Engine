@@ -35,6 +35,7 @@ add_subdirectory(Engine)
 
 add_executable(${PROJECT_NAME} Game/main.cpp
         Game/Player.h
+        Game/Obstacle.h
 )
 
 # link the engine library

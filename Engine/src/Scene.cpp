@@ -133,14 +133,11 @@ namespace RayEngine {
                     start = Vector2Add(start,offset);
 
 
-
                     // calculate start position
                     // multiply normal by polygon size
                     auto end = start;
 
                     end = Vector2Add(end, Vector2Rotate(Vector2Scale(normal,10),rotation.GetRadians()));
-
-
 
                     DrawCircleV(start,2,GRAY);
                     DrawCircleV(end,2,LIME);

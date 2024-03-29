@@ -15,9 +15,7 @@ int main()
 //        Debug::SetDebugFlag(Debug::DebugFlags::DRAW_BOUNDING_BOX);
 //        Debug::SetDebugFlag(Debug::DebugFlags::DRAW_ROTATION);
 //        Debug::SetDebugFlag(Debug::DebugFlags::DRAW_VERTICES);
-        Debug::SetDebugFlag(Debug::DebugFlags::DRAW_NORMALS);
-
-//        WARNING: Not Implemented Yet
+//        Debug::SetDebugFlag(Debug::DebugFlags::DRAW_NORMALS);
 //        Debug::SetDebugFlag(Debug::DebugFlags::DRAW_TRIANGLES);
     }
 

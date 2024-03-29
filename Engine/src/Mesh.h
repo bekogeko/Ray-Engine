@@ -8,6 +8,7 @@
 #include <vector>
 #include "raylib.h"
 #include "raymath.h"
+#include "ECS/Rotation.h"
 
 namespace RayEngine {
     class Mesh {
@@ -28,7 +29,7 @@ namespace RayEngine {
         virtual ~Mesh() {};
 
         // Returns the bounding box of the mesh
-        virtual Rectangle GetBoundingBox(Vector2 position, float rotation) const = 0;
+        virtual Rectangle GetBoundingBox(Vector2 position, Rotation rotation) const = 0;
 
         // gives the faces of the mesh in local space (without rotation and translation)
         virtual std::vector<std::tuple<Vector2, Vector2>> GetFaces() const = 0;

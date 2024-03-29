@@ -17,6 +17,8 @@ namespace RayEngine {
     struct PhysicsBody {
         float mass = 1.0f;
         float restitution = 0.0f;
+
+        // rotational velocity in radians
         float rotationalVelocity = 0.0f;
         float density = 1.0f;
 

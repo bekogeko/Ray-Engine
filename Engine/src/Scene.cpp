@@ -48,6 +48,7 @@ namespace RayEngine {
         // get items with PhysicsBody component and TransformComponent
         auto physicsView = entityRegistry.view<PhysicsBody,TransformComponent>();
 
+        // Update positions and velocities
         for(auto entity: physicsView){
             auto [physicsBody,transform] = physicsView.get<PhysicsBody,TransformComponent>(entity);
             // Update position
@@ -57,7 +58,15 @@ namespace RayEngine {
             physicsBody.velocity = Vector2Add(physicsBody.velocity, Vector2Scale(physicsBody.acceleration, GetFrameTime()));
 
             // Update rotation
-            transform.rotation += physicsBody.rotationalVelocity*GetFrameTime();
+            transform.rotation += (physicsBody.rotationalVelocity * GetFrameTime() ) * RAD2DEG;
+        }
+
+        // collision detection
+        for (auto entity: physicsView){
+            auto [physicsBody,transform] = physicsView.get<PhysicsBody,TransformComponent>(entity);
+
+
+
         }
 
 
@@ -79,27 +88,40 @@ namespace RayEngine {
         auto boxRenderers = entityRegistry.view<TransformComponent,BoxRenderer>();
         for(auto entity: boxRenderers){
             auto [transform,renderer] = boxRenderers.get<TransformComponent,BoxRenderer>(entity);
-            auto vertices = renderer.GetVertices();
+
             auto indices = renderer.GetIndices();
-            auto normals = renderer.GetNormals();
             auto position = transform.position;
             auto rotation = transform.rotation;
 
             for(auto& index: indices){
                 auto [v1,v2,v3] = index;
-                auto p1 = Vector2Rotate(v1,rotation);
-                auto p2 = Vector2Rotate(v2,rotation);
-                auto p3 = Vector2Rotate(v3,rotation);
+                auto p1 = Vector2Rotate(v1,rotation.GetRadians());
+                auto p2 = Vector2Rotate(v2,rotation.GetRadians());
+                auto p3 = Vector2Rotate(v3,rotation.GetRadians());
 
                 p1 = Vector2Add(p1,position);
                 p2 = Vector2Add(p2,position);
                 p3 = Vector2Add(p3,position);
 
+                // draw triangle
                 DrawTriangle(p1,p2,p3,RED);
+                // we might want to draw the lines with
+                // DrawTriangleStrip
+                // How it works:
+                // You pass an array of points and it draws the triangles
+                // in order of the points in the array
+                // DrawTriangleStrip(Vector2* points, int pointsCount, Color color);
+
+                if(Debug::HasFlags(Debug::DRAW_TRIANGLES)){
+                    DrawLineEx(p1,p2,1,BLUE);
+                    DrawLineEx(p2,p3,1,BLUE);
+                    DrawLineEx(p3,p1,1,BLUE);
+                }
             }
 
             // if debug flag is set for normals
             if(Debug::HasFlags(Debug::DRAW_NORMALS)){
+                auto normals = renderer.GetNormals();
                 for(auto& normal: normals){
 
                     auto start=position;
@@ -109,7 +131,7 @@ namespace RayEngine {
                     offset = Vector2Multiply(normal, Vector2Divide(renderer.GetSize(),{2,2}));
 
                     // rotate offset
-                    offset = Vector2Rotate(offset,rotation);
+                    offset = Vector2Rotate(offset,rotation.GetRadians());
                     // add position
                     start = Vector2Add(start,offset);
 
@@ -119,7 +141,7 @@ namespace RayEngine {
                     // multiply normal by polygon size
                     auto end = start;
 
-                    end = Vector2Add(end, Vector2Rotate(Vector2Scale(normal,10),rotation));
+                    end = Vector2Add(end, Vector2Rotate(Vector2Scale(normal,10),rotation.GetRadians()));
 
 
 
@@ -129,7 +151,26 @@ namespace RayEngine {
                     DrawLineEx(start,end,2,BLUE);
 
                 }
+            }
 
+            if (Debug::HasFlags(Debug::DRAW_VERTICES)){
+                auto vertices = renderer.GetVertices();
+                for(auto& vertex: vertices) {
+                    auto p = Vector2Rotate(vertex, rotation.GetRadians());
+                    p = Vector2Add(p, position);
+                    DrawCircleV(p, 2, BLUE);
+                }
+            }
+
+            if(Debug::HasFlags(Debug::DRAW_ROTATION)){
+                DrawCircleSector(position,10,0 ,rotation,8,BLUE);
+                DrawText(TextFormat("Rotation %.f",(float)rotation),position.x+50,position.y+50,10,BLUE);
+            }
+
+            if (Debug::HasFlags(Debug::DRAW_BOUNDING_BOX)){
+                // x,y,w,h
+                auto bounds = renderer.GetBoundingBox(position,rotation);
+                DrawRectangleLinesEx(bounds,1,BLUE);
             }
         }
 

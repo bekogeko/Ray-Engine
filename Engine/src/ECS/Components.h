@@ -7,12 +7,15 @@
 #include "raylib.h"
 #include "Entity.h"
 #include "Mesh.h"
+#include "Rotation.h"
 
 namespace RayEngine {
     struct TransformComponent{
         // the changes will be applied to these variables
         Vector2 position;
-        float rotation;
+        // rotation in radians
+        Rotation rotation;
+
 
 
         // reassign last position and rotation
@@ -32,6 +35,7 @@ namespace RayEngine {
             return lastRotation;
         }
 
+
         TransformComponent() = default;
         TransformComponent(const TransformComponent&) = default;
         explicit TransformComponent(const Vector2& pos){
@@ -42,7 +46,7 @@ namespace RayEngine {
         }
     private:
         Vector2 lastPosition{};
-        float lastRotation{};
+        Rotation lastRotation{};
     };
 
     struct TagComponent {
@@ -90,7 +94,8 @@ namespace RayEngine {
             // Left Face Normal
             this->normals.push_back({-1, 0});
         }
-        Rectangle GetBoundingBox(Vector2 position, float rotation) const override{
+
+        Rectangle GetBoundingBox(Vector2 position, Rotation rotation) const override{
             // Get the bounding box of the rectangle with the given position and rotation angle (in radians in the center)
 
             float minX = INFINITY;
@@ -100,7 +105,7 @@ namespace RayEngine {
             float maxY = -INFINITY;
 
             for (auto &v: this->vertices){
-                Vector2 rotated = Vector2Rotate(v, rotation);
+                Vector2 rotated = Vector2Rotate(v, rotation.GetRadians());
                 Vector2 translated = Vector2Add(rotated, position);
 
                 if (translated.x < minX)

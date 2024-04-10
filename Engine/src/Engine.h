@@ -16,7 +16,7 @@ namespace RayEngine
         /// <summary>
         /// Initialize the engine
         /// </summary>
-        static void Init(int width, int height, const char *title="RayEngine",int fps=120);
+        static void Init(Camera2D& camera,int width, int height, const char *title="RayEngine",int fps=120);
 
         /// <summary>
         /// Update the engine and all the game objects
@@ -26,7 +26,8 @@ namespace RayEngine
         /// <summary>
         /// Draw all the game objects
         /// </summary>
-        static void Draw(Camera2D camera);
+        static void Draw(Camera2D& camera);
+
 
 
 
@@ -50,9 +51,14 @@ namespace RayEngine
             static Engine instance;
             return instance;
         }
+
+        static bool IsDrawing()  {
+            return get().m_IsDrawing;
+        }
     private:
         // current scene
         std::shared_ptr<Scene> m_Scene;
+        bool m_IsDrawing;
 
         static void Start();
 

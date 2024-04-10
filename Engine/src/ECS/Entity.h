@@ -6,7 +6,7 @@
 
 #include "entt/entt.hpp"
 #include "Scene.h"
-#include "Components.h"
+//#include "Components.h"
 #include <iostream>
 
 namespace RayEngine {

@@ -12,14 +12,15 @@
 namespace RayEngine
 {
 
-    void Engine::Init(int width, int height, const char *title, int fps)
+    void Engine::Init(Camera2D& camera,int width, int height, const char *title, int fps)
     {
         // Initialize the window and set the target fps
         InitWindow(width, height, title);
         SetTargetFPS(fps);
 
         // Initialize the scene
-        get().m_Scene = std::make_shared<Scene>();
+        get().m_Scene = std::make_shared<Scene>(&camera);
+        get().m_IsDrawing = false;
     }
 
 
@@ -46,28 +47,38 @@ namespace RayEngine
         get().m_Scene->UpdateScene();
     }
 
-    void Engine::Draw(Camera2D camera) {
+    void Engine::Draw(Camera2D& camera) {
 
         // - Draw World (Entities)
         // - Draw Debug
         // - Draw UI
+
+//        get().m_Scene->SetCamera(&camera);
 
 
         // Clear the screen
         BeginDrawing();
         ClearBackground(RAYWHITE);
         {
+            // Draw the world
             BeginMode2D(camera);
+
+            get().m_IsDrawing = true;
 
             // Draw the scene
             get().m_Scene->DrawScene();
 
             EndMode2D();
+            get().m_IsDrawing = false;
         }
-//        {
-//            // Draw UI
-//            get().m_Scene->DrawUI();
-//        }
+        {
+
+            get().m_IsDrawing = true;
+            // Draw UI
+            get().m_Scene->DrawUI();
+
+            get().m_IsDrawing = false;
+        }
 
         EndDrawing();
 
@@ -104,4 +115,7 @@ namespace RayEngine
         }
         return WindowShouldClose();
     }
+
+
+
 }

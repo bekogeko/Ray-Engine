@@ -9,7 +9,9 @@
 namespace RayEngine {
 
 
-    Scene::Scene() {
+    Scene::Scene(Camera2D* camera) {
+        std::cout << "Scene created..." << std::endl;
+        m_Camera = std::shared_ptr<Camera2D>(camera);
     }
 
     Scene::~Scene() {
@@ -81,15 +83,15 @@ namespace RayEngine {
                     // and then we can check for collision components
                     // and then we can call OnCollision on the entities
 
+
                     // if Debug::DRAW_COLLISION is set
                     if(Debug::HasFlags(Debug::DRAW_COLLISION)){
-                        DrawRectangleLinesEx(colliderBounds,1,RED);
-                        DrawRectangleLinesEx(otherBounds,1,RED);
+                        // convert Collider bounds to world space
+                        // fix width and height
+                        auto worldPos = GetWorldToScreen2D({colliderBounds.x,colliderBounds.y},*m_Camera);
+                        auto worldSize = Vector2Scale({colliderBounds.width,colliderBounds.height},m_Camera->zoom);
+                        DrawRectangleLinesEx({worldPos.x,worldPos.y,worldSize.x,worldSize.y},5,RED);
                     }
-
-                }
-                else{
-                    DrawText("No Collision", 100, 100, 20, GREEN);
                 }
             }
         }

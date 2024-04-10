@@ -6,7 +6,7 @@
 // Engine Interface
 #include "Engine.h"
 
-#include "ECS/Components.h"
+//#include "ECS/Components.h"
 #include "ECS/Entity.h"
 #include "Scene.h"
 

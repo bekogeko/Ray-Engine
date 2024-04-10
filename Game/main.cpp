@@ -30,7 +30,7 @@ int main()
 
 
     // - Initialize the engine
-    RayEngine::Engine::Init(screenWidth, screenHeight);
+    RayEngine::Engine::Init(camera,screenWidth, screenHeight);
 
     Player player;
     Obstacle obstacle1({100, 100}, {50, 50});

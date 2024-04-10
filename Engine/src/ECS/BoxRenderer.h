@@ -46,30 +46,28 @@ namespace RayEngine {
         }
 
         Rectangle GetBoundingBox(Vector2 position, Rotation rotation) const override{
-            // Get the bounding box of the rectangle with the given position and rotation angle (in radians in the center)
+            // rotation happens around the center of the box
+            // bounding box contains the rotated box
+            // bounding box might be bigger than the box itself (most of the time)
 
-            float minX = INFINITY;
-            float minY = INFINITY;
+            // get the half size of the box
+            Vector2 halfSize = Vector2Divide(this->size, {2, 2});
 
-            float maxX = -INFINITY;
-            float maxY = -INFINITY;
+            // get the corners of the box
+            Vector2 topLeft = Vector2Add(position, Vector2Rotate(Vector2Negate(halfSize), rotation.GetRadians()));
+            Vector2 topRight = Vector2Add(position, Vector2Rotate({halfSize.x, -halfSize.y}, rotation.GetRadians()));
+            Vector2 bottomLeft = Vector2Add(position, Vector2Rotate({-halfSize.x, halfSize.y}, rotation.GetRadians()));
+            Vector2 bottomRight = Vector2Add(position, Vector2Rotate(halfSize, rotation.GetRadians()));
 
-            for (auto &v: this->vertices){
-                Vector2 rotated = Vector2Rotate(v, rotation.GetRadians());
-                Vector2 translated = Vector2Add(rotated, position);
+            // get the min and max of the corners
+            float minX = std::min({topLeft.x, topRight.x, bottomLeft.x, bottomRight.x});
+            float minY = std::min({topLeft.y, topRight.y, bottomLeft.y, bottomRight.y});
 
-                if (translated.x < minX)
-                    minX = translated.x;
-                if (translated.x > maxX)
-                    maxX = translated.x;
-
-                if (translated.y < minY)
-                    minY = translated.y;
-                if (translated.y > maxY)
-                    maxY = translated.y;
-            }
+            float maxX = std::max({topLeft.x, topRight.x, bottomLeft.x, bottomRight.x});
+            float maxY = std::max({topLeft.y, topRight.y, bottomLeft.y, bottomRight.y});
 
             return {minX, minY, maxX - minX, maxY - minY};
+
         }
 
         std::vector<std::tuple<Vector2, Vector2>> GetFaces() const override{

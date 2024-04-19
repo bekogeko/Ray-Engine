@@ -14,6 +14,8 @@ private:
 public:
 
     Obstacle(Vector2 position, Vector2 size): position(position), size(size){
+        static int count = 0;
+        m_Name = "Obstacle " + std::to_string(count++);
     }
 
     void Start() override {

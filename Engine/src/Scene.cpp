@@ -9,25 +9,17 @@
 namespace RayEngine {
 
 
-    Scene::Scene(Camera2D* camera) {
+    Scene::Scene(): m_Camera(std::make_shared<Camera2D>()) {
         std::cout << "Scene created..." << std::endl;
-        m_Camera = std::shared_ptr<Camera2D>(camera);
+
     }
 
     Scene::~Scene() {
         std::cout << "Scene destroyed..." << std::endl;
-        // Clear all entities in the scene
-        // components are destroyed automatically
-        m_Entities.clear();
-
-        // Destroy all entities
-        for(auto& entity: m_Entities){
-            entity.reset();
-        }
     }
 
-    void Scene::RecordEntity(std::unique_ptr<Entity> entity) {
-        m_Entities.push_back(std::move(entity));
+    void Scene::RecordEntity(Entity* entity) {
+        m_Entities.push_back(entity);
     }
 
 

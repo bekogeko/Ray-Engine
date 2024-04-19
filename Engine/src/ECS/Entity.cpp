@@ -10,20 +10,13 @@
 namespace RayEngine {
 
     Entity::Entity(){
+        //
+        std::cout << "Entity created..." << std::endl;
+
         m_Scene = Engine::GetScene();
         m_Id = m_Scene->CreateEntity();
 
         // Record the entity
-        m_Scene->RecordEntity(std::unique_ptr<Entity>(this));
+        m_Scene->RecordEntity(this);
     }
-
-
-
-    Entity::Entity(EntityID id,  std::shared_ptr<Scene> scene) : m_Id(id), m_Scene(std::move(scene)) {
-    }
-
-
-
-
-
 }

@@ -17,11 +17,11 @@ namespace RayEngine {
 
     class Scene {
     public:
-        Scene(Camera2D* camera);
+        Scene();
         ~Scene();
 
         EntityID CreateEntity();
-        void RecordEntity(std::unique_ptr<Entity> entity);
+        void RecordEntity(Entity* entity);
 
         void StartScene();
         void UpdateScene();
@@ -53,18 +53,14 @@ namespace RayEngine {
             }
         }
 
-        Camera2D GetCamera() { return *m_Camera; }
-//        void SetCamera(Camera2D* camera) {
-////            m_Camera = std::shared_ptr<Camera2D>(camera);
-////            m_Camera.reset(camera);
-//        }
+        std::shared_ptr<Camera2D> GetCameraRef() { return m_Camera; }
+
 
     private:
         entt::registry entityRegistry;
         std::vector<EntityID> m_EntityIds;
 
-//        std::vector<std::shared_ptr<Entity>> m_Entities;
-        std::vector<std::unique_ptr<Entity>> m_Entities;
+        std::vector<Entity*> m_Entities;
 
         std::shared_ptr<Camera2D> m_Camera;
     };

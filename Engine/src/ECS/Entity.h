@@ -14,12 +14,12 @@ namespace RayEngine {
     class Entity {
     public:
         Entity();
-        Entity(EntityID id,  std::shared_ptr<Scene> scene);
-        Entity(const Entity& other) = default;
+
+        Entity(EntityID id,  std::shared_ptr<Scene> scene) = delete;
+        Entity(const Entity& other) = delete;
 
         virtual ~Entity(){
-            std::cout << "Entity destroyed..." << std::endl;
-            m_Scene.reset();
+            std::cout <<"Entity("<< m_Name <<") destroyed..." << std::endl;
         }
 
 
@@ -48,6 +48,10 @@ namespace RayEngine {
     private:
         EntityID m_Id{ entt::null};
         std::shared_ptr<Scene> m_Scene = nullptr;
+
+    protected:
+        // for debugging
+        std::string m_Name;
     };
 
 }

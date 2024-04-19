@@ -8,6 +8,7 @@
 //------------------------------------------------------------------------------------
 int main()
 {
+    int help = 2;
     // Initialization
     const int screenWidth = 800;
     const int screenHeight = 450;
@@ -21,16 +22,17 @@ int main()
         Debug::SetDebugFlag(Debug::DebugFlags::DRAW_COLLISION);
     }
 
-    Camera2D camera = { 0 };
-    camera.target = (Vector2){  0, 0 };
-    camera.offset = (Vector2){ screenWidth/2, screenHeight/2 };
-    camera.rotation = 0.0f;
-    camera.zoom = 1.42f;
-
-
+    {
+        auto currentScene = RayEngine::Engine::GetScene();
+        auto camera = RayEngine::Engine::GetScene()->GetCameraRef();
+        camera->target = (Vector2){  0, 0 };
+        camera->offset = (Vector2){ screenWidth/2, screenHeight/2 };
+        camera->rotation = 0.0f;
+        camera->zoom = 1.42f;
+    }
 
     // - Initialize the engine
-    RayEngine::Engine::Init(camera,screenWidth, screenHeight);
+    RayEngine::Engine::Init(screenWidth, screenHeight);
 
     Player player;
     Obstacle obstacle1({100, 100}, {50, 50});
@@ -59,55 +61,8 @@ int main()
         // - Draw Entities (Player, Obstacles, etc.)
         // - Draw Debug
         // - Draw UI
-        RayEngine::Engine::Draw(camera);
+        RayEngine::Engine::Draw();
 
-
-        // Update Game Entities (Player, Obstacles, etc.)
-        //----------------------------------------------------------------------------------
-//        player.Update();
-//        for (auto &obstacle : obstacles) {
-//            obstacle.Update();
-//        }
-
-        // Draw
-        //----------------------------------------------------------------------------------
-//        BeginDrawing();
-//        ClearBackground(RAYWHITE);
-//        {
-//            // Draw Game Entities
-//            //----------------------------------------------------------------------------------
-//            BeginMode2D(camera);
-//
-//            // Draw player
-////            player.Draw();
-////
-////            // Draw obstacles
-////            for (auto &obstacle : obstacles) {
-////                obstacle.Draw();
-////            }
-////
-////            // Draw Debug
-////            player.DrawDebug();
-////            for (auto &obstacle : obstacles) {
-////                obstacle.DrawDebug();
-////            }
-//
-//
-//
-//            EndMode2D();
-//        }
-
-
-        // Draw UI
-        //----------------------------------------------------------------------------------
-//        {
-//            player.DrawUI();
-//            for (auto &obstacle : obstacles) {
-//                obstacle.DrawUI();
-//            }
-//        }
-//        EndDrawing();
-        //----------------------------------------------------------------------------------
     }
 
     // De-Initialization

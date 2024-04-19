@@ -8,6 +8,9 @@
 
 class Player: public RayEngine::Entity{
 
+private:
+
+
 protected:
 
     void Start() override {
@@ -48,8 +51,12 @@ protected:
     }
 
 public:
-    Player() = default;
-    ~Player() override {
+    ~Player() override{
         std::cout << "Player destroyed..." << std::endl;
     };
+    // upon construction tag the entity as player
+    Player() {
+        // reach base constructor to tag the entity as player
+        m_Name = "Player";
+    }
 };

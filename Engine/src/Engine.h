@@ -16,7 +16,7 @@ namespace RayEngine
         /// <summary>
         /// Initialize the engine
         /// </summary>
-        static void Init(Camera2D& camera,int width, int height, const char *title="RayEngine",int fps=120);
+        static void Init(int width, int height, const char *title="RayEngine",int fps=120);
 
         /// <summary>
         /// Update the engine and all the game objects
@@ -26,11 +26,7 @@ namespace RayEngine
         /// <summary>
         /// Draw all the game objects
         /// </summary>
-        static void Draw(Camera2D& camera);
-
-
-
-
+        static void Draw();
 
         /// <summary>
         /// Close the engine
@@ -52,19 +48,31 @@ namespace RayEngine
             return instance;
         }
 
-        static bool IsDrawing()  {
-            return get().m_IsDrawing;
+        static int GetScreenWidth() {
+            return get().m_ScreenWidth;
         }
+
+         static int GetScreenHeight() {
+            return get().m_ScreenHeight;
+        }
+
+
     private:
         // current scene
         std::shared_ptr<Scene> m_Scene;
         bool m_IsDrawing;
 
+        // screen width and height
+        int m_ScreenWidth{480};
+        int m_ScreenHeight{240};
+
+
         static void Start();
+
+        Engine();
 
         ~Engine(){
             std::cout << "Engine destroyed..." << std::endl;
-            m_Scene.reset();
         }
 
 

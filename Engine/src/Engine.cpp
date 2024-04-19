@@ -11,16 +11,16 @@
 
 namespace RayEngine
 {
+    Engine::Engine(): m_IsDrawing(false) {
+        std::cout << "Engine created..." << std::endl;
+        m_Scene = std::make_shared<Scene>();
+    }
 
-    void Engine::Init(Camera2D& camera,int width, int height, const char *title, int fps)
+    void Engine::Init(int width, int height, const char *title, int fps)
     {
         // Initialize the window and set the target fps
         InitWindow(width, height, title);
         SetTargetFPS(fps);
-
-        // Initialize the scene
-        get().m_Scene = std::make_shared<Scene>(&camera);
-        get().m_IsDrawing = false;
     }
 
 
@@ -47,7 +47,10 @@ namespace RayEngine
         get().m_Scene->UpdateScene();
     }
 
-    void Engine::Draw(Camera2D& camera) {
+    void Engine::Draw() {
+
+        // get the camera from the scene
+        Camera2D camera = *get().m_Scene->GetCameraRef();
 
         // - Draw World (Entities)
         // - Draw Debug
@@ -86,6 +89,14 @@ namespace RayEngine
 
     void Engine::Close() {
         CloseWindow();
+
+        // Close the scene
+        // This will call the destructor of the scene
+        // which will call the destructor of all the entities
+
+
+        std::cout << "Engine closed... (scene reset)" << std::endl;
+
     }
 
 
